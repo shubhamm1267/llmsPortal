@@ -1,0 +1,596 @@
+<!-- //user modal -->
+<div
+  class="modal fade"
+  id="userModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ isEdit ? "Edit User" : "Add User" }}</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="userForm">
+          <label>ID:</label>
+          <input
+            type="text"
+            formControlName="id"
+            required
+            class="form-control"
+            placeholder="ID"
+            aria-label="id"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>First Name:</label>
+          <input
+            type="text"
+            formControlName="fname"
+            required
+            class="form-control"
+            placeholder="fname"
+            aria-label="fname"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>Username:</label>
+
+          <input
+            type="text"
+            formControlName="username"
+            required
+            class="form-control"
+            placeholder="Username"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>Role:</label>
+          <select
+            class="form-select"
+            formControlName="role"
+            aria-label="defaultVal"
+          >
+            <option selected>Select Role</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+          </select>
+
+          <label>Status:</label>
+          <select
+            class="form-select"
+            formControlName="status"
+            aria-label="defaultVal"
+          >
+            <option selected>Select Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+
+          <button
+            type="submit"
+            type="button"
+            class="btn btn-success"
+            (click)="onSubmit()"
+            data-bs-dismiss="modal"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- //student modal -->
+<div
+  class="modal fade"
+  id="studentModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ isEdit ? "Edit Student" : "Add Student" }}</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="studentForm">
+          <label>ID:</label>
+          <input
+            type="text"
+            formControlName="id"
+            required
+            class="form-control"
+            placeholder="ID"
+            aria-label="id"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>Licence:</label>
+          <input
+            type="text"
+            formControlName="licence"
+            required
+            class="form-control"
+            placeholder="licence"
+            aria-label="licence"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>First Name:</label>
+
+          <input
+            type="text"
+            formControlName="fname"
+            required
+            class="form-control"
+            placeholder="First Name"
+            aria-label="fname"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>Mobile:</label>
+
+          <input
+            type="text"
+            formControlName="mobile"
+            required
+            class="form-control"
+            placeholder="Mobile"
+            aria-label="mobile"
+            aria-describedby="basic-addon1"
+          />
+
+          <label>Status:</label>
+          <select
+            class="form-select"
+            formControlName="status"
+            aria-label="defaultVal"
+          >
+            <option selected>Select Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+
+          <button
+            type="submit"
+            type="button"
+            class="btn btn-success"
+            (click)="onStudentSubmit()"
+            data-bs-dismiss="modal"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div [class.sidebar-closed]="!sidebarOpen" class="sidebar">
+    <div class="sidebar-header">
+      <img
+        src="https://s3-alpha-sig.figma.com/img/bf51/f94b/49f8d6a0d11a1e6eb0dede7f5124184b?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=B7-7OvR3updncousT-o-gmbFfpTt-bEosBNg6KE1PXxw2CroAsd93NaRBQL5dtjTKhQoSAT1tFTxITXRyn9oQEu~jaT0amLVStFbbrhH6BI~c3eWbYnx653W3WsgwMp1zZRWDVJ1gj82c~BGae9feYns23YB7OtWNgHX-G9J7nTlVirve4KEKUE3In4iaSXl56OMf8p3-Gv6b0fwqTHh6CFcXovcM~9Ze2J-SgYu5~YF7SzWOpFAimqPBPQfdo8SwsDYU9sBnSmqPcWjfqv0H77uQAsa2tFUL1cFssq8ikxspOyjXrq-K-UgaIc60VCCcV4~XOvuX6hv6nZyzbjboQ__"
+        class="com-logo"
+        alt=""
+      />
+    </div>
+    <ul class="list-unstyled">
+      <li>
+        <a (click)="setTabIndex(0)" [class.active]="tabIndex === 0"
+          ><span class="sidebar-icon"><i class="fa fa-solid fa-home"></i></span
+          >Dashboard</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(1)" [class.active]="tabIndex === 1"
+          ><span class="sidebar-icon"><i class="fa fa-solid fa-user"></i></span
+          >Users</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(2)" [class.active]="tabIndex === 2"
+          ><span class="sidebar-icon"><i class="fa fa-solid fa-users"></i></span
+          >Mentors</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(3)" [class.active]="tabIndex === 3"
+          ><span class="sidebar-icon"
+            ><i class="fa fa-solid fa-user-graduate"></i></span
+          >Students</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(4)" [class.active]="tabIndex === 4"
+          ><span class="sidebar-icon"
+            ><i class="fa fa-solid fa-id-card"></i></span
+          >Licenses</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(5)" [class.active]="tabIndex === 5"
+          ><span class="sidebar-icon"><i class="fa fa-solid fa-award"></i></span
+          >Course</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(6)" [class.active]="tabIndex === 6"
+          ><span class="sidebar-icon"><i class="fa fa-solid fa-tag"></i></span
+          >Pricing Plans</a
+        >
+      </li>
+      <li>
+        <a (click)="setTabIndex(7)" [class.active]="tabIndex === 7"
+          ><span class="sidebar-icon"
+            ><i class="fa fa-solid fa-graduation-cap"></i></span
+          >Masters</a
+        >
+      </li>
+    </ul>
+    <button (click)="logout()" class="signout-btn">Sign Out</button>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <div>
+        <h2 *ngIf="tabIndex === 0">Dashboard</h2>
+        <h2 *ngIf="tabIndex === 1">Users</h2>
+        <h2 *ngIf="tabIndex === 2">Mentors</h2>
+        <h2 *ngIf="tabIndex === 3">Students</h2>
+      </div>
+      <div class="main-flex">
+        <div class="main-search">
+          <i class="fa fa-solid fa-search search-icon"></i
+          ><input type="text" placeholder="Search Here" class="search-box" />
+        </div>
+        <div class="profile">
+          <span><i class="fa fa-solid fa-bell"></i></span>
+          <img
+            src="https://www.avatarapi.com/images/person2.jpg"
+            width="30px"
+            height="30px"
+            alt="User"
+          />
+          <span class="user-name">Christine Dia</span>
+          <i class="fa fa-solid fa-chevron-down arrow-icon"></i>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="dashboard" *ngIf="tabIndex === 0">
+        <div class="card-head">
+          <div class="card-body">
+            <h4>Welcome Back Christine</h4>
+            <p>You can now view the overall report below.</p>
+          </div>
+          <button class="report-btn">Download Report</button>
+        </div>
+
+        <div class="stats-container">
+          <div class="stat-card">
+            <h3 class="margin-text">2</h3>
+            <p class="dash-icons">
+              <span><i class="fa fa-solid fa-server"></i></span>Live Users
+            </p>
+          </div>
+          <div class="stat-card">
+            <h3 class="margin-text">3677</h3>
+            <p class="dash-icons">
+              <span><i class="fa fa-solid fa-award"></i></span>Certified
+              Students
+            </p>
+          </div>
+          <div class="stat-card">
+            <h3 class="margin-text">898876</h3>
+            <p class="dash-icons">
+              <span><i class="fa fa-solid fa-users"></i></span>Total Students
+            </p>
+          </div>
+        </div>
+
+        <h4>Registered Students</h4>
+        <div class="dashboard-stats">
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>899</h3>
+              <p>Premium</p>
+            </div>
+          </div>
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>200</h3>
+              <p>Superb</p>
+            </div>
+          </div>
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>399</h3>
+              <p>Super Plus</p>
+            </div>
+          </div>
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>1000</h3>
+              <p>Total Student</p>
+            </div>
+          </div>
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>7</h3>
+              <p>Today's Registration</p>
+            </div>
+          </div>
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>50</h3>
+              <p>New Users</p>
+            </div>
+          </div>
+        </div>
+        <h4>Registered Mentors</h4>
+        <div class="mentor-stats">
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>0</h3>
+              <p>Registered Mentors</p>
+            </div>
+          </div>
+          <div class="register-card">
+            <div class="circle">
+              <span
+                ><i class="fa fa-solid fa-user-graduate circle-icon"></i
+              ></span>
+            </div>
+            <div>
+              <h3>0</h3>
+              <p>Registered Mentors</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="tabIndex === 1">
+        <i class="fa fa-solid fa-search search-filter-icon"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="filterUsers()"
+          placeholder="Search users..."
+          class="search-filter"
+        />
+        <div class="add-user">
+          <button
+            class="btn btn-outline custom-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#userModal"
+            type="button"
+            (click)="openModal()"
+          >
+            <i class="fa fa-solid fa-user-plus"></i>
+            Add User
+          </button>
+          <button class="btn custom-btn">Export To excel</button>
+        </div>
+        <table class="table table striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUserList; let i = index">
+              <td>{{ user.id }}</td>
+              <td>{{ user.fname }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <span class="badge badge-size">{{ user.status }}</span>
+              </td>
+              <td class="actions">
+                <span
+                  ><i
+                    class="fa fa-solid fa-edit action-edit"
+                    data-bs-toggle="modal"
+                    data-bs-target="#userModal"
+                    (click)="editUser(i)"
+                  ></i
+                ></span>
+                <span
+                  ><i
+                    class="fa fa-solid fa-trash action-delete"
+                    (click)="deleteUser(i)"
+                  ></i
+                ></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="tabIndex === 2">
+        <i class="fa fa-solid fa-search search-filter-icon"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="filterStudents()"
+          placeholder="Search users..."
+          class="search-filter"
+        />
+        <div class="add-user">
+          <button
+            class="btn btn-outline custom-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#userModal"
+            type="button"
+            (click)="openModal()"
+          >
+            <i class="fa fa-solid fa-user-plus"></i>
+            Add User
+          </button>
+          <button class="btn custom-btn">Export To excel</button>
+        </div>
+        <table class="table table striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUserList; let i = index">
+              <td>{{ user.id }}</td>
+              <td>{{ user.fname }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <span class="badge badge-size">{{ user.status }}</span>
+              </td>
+              <td class="actions">
+                <span
+                  ><i
+                    class="fa fa-solid fa-edit action-edit"
+                    data-bs-toggle="modal"
+                    data-bs-target="#userModal"
+                    (click)="editUser(i)"
+                  ></i
+                ></span>
+                <span
+                  ><i
+                    class="fa fa-solid fa-trash action-delete"
+                    (click)="deleteUser(i)"
+                  ></i
+                ></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="tabIndex === 3">
+        <i class="fa fa-solid fa-search search-filter-icon"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="filterStudents()"
+          placeholder="Search users..."
+          class="search-filter"
+        />
+        <div class="add-user">
+          <button
+            class="btn btn-outline custom-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#studentModal"
+            type="button"
+            (click)="openStudentModal()"
+          >
+            <i class="fa fa-solid fa-user-plus"></i>
+            Add User
+          </button>
+          <button class="btn custom-btn">Export To excel</button>
+        </div>
+        <table class="table table striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Licence By</th>
+              <th>Full Name</th>
+              <th>Mobile</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredStudentList; let i = index">
+              <td>{{ user.id }}</td>
+              <td>{{ user.licence }}</td>
+              <td>{{ user.fname }}</td>
+              <td>{{ user.mobile }}</td>
+              <td>
+                <span class="badge badge-size">{{ user.status }}</span>
+              </td>
+              <td class="actions">
+                <span
+                  ><i
+                    class="fa fa-solid fa-edit action-edit"
+                    data-bs-toggle="modal"
+                    data-bs-target="#studentModal"
+                    (click)="editStudent(i)"
+                  ></i
+                ></span>
+                <span
+                  ><i
+                    class="fa fa-solid fa-trash action-delete"
+                    (click)="deleteStudent(i)"
+                  ></i
+                ></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="image-container">
+      <img  src="https://img.freepik.com/free-photo/3d-student-graduation-cap-books-stack_107791-15667.jpg?t=st=1738298727~exp=1738302327~hmac=fb9769b4b9b6054dbcc658aa3aec73d3a4b5db6ee6d6b852a09c3803311c305b&w=740" alt="register">
+    </div>
+    <div class="login-container">
+      <h2>SIGN UP</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-group">
+          <label>Enter Username</label>
+          <input type="text" formControlName="username" name="Enter Username" required />
+          <div class="error" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+            Username is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password" name="Password" required />
+          <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            Password is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" formControlName="confirmpass" name="ConfirmPassword" required />
+          <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('confirmpass')?.touched">
+            Passwords do not match
+          </div>
+        </div>
+        <div class="checkbox-label">
+          <input type="checkbox" formControlName="checkbox" id="terms&conditions" />
+          <label for="terms&conditions">By clicking, you are accepting to our terms & conditions and privacy policies</label>
+          <div class="error" *ngIf="registerForm.get('checkbox')?.invalid && registerForm.get('checkbox')?.touched">
+            You must accept the terms
+          </div>
+        </div>
+        <button type="submit" class="login-btn" [disabled]="registerForm.invalid">Sign Up</button>
+        <div class="links-section">
+          <br />
+          <a  [routerLink]="['/login']" routerLinkActive="active">Back to login</a>
+          <br />
+        </div>
+      </form>
+    </div>
+  </div>
