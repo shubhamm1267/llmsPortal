@@ -13,7 +13,7 @@ import { UserService } from '../user.service';
   selector: 'app-dashboard',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
+  styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
   sidebarOpen = true;
