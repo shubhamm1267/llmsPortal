@@ -75,14 +75,8 @@
             <option value="Inactive">Inactive</option>
           </select>
 
-          <button
-            type="submit"
-            type="button"
-            class="btn btn-success"
-            (click)="onSubmit()"
-            data-bs-dismiss="modal"
-          >
-            Submit
+          <button class="btn btn-success" (click)="selectedUser ? updateUser() : addUser()" data-bs-dismiss="modal">
+            {{ selectedUser ? 'Update' : 'Add' }}
           </button>
         </form>
       </div>
@@ -101,7 +95,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{ isEdit ? "Edit Student" : "Add Student" }}</h4>
+        <h4 class="modal-title">
+          {{ isEdit ? "Edit Student" : "Add Student" }}
+        </h4>
         <button
           type="button"
           class="btn-close"
@@ -168,14 +164,8 @@
             <option value="Inactive">Inactive</option>
           </select>
 
-          <button
-            type="submit"
-            type="button"
-            class="btn btn-success"
-            (click)="onStudentSubmit()"
-            data-bs-dismiss="modal"
-          >
-            Submit
+          <button class="btn btn-success" (click)="selectedUser ? updateUser() : addUser()" data-bs-dismiss="modal">
+            {{ selectedUser ? 'Update' : 'Add' }}
           </button>
         </form>
       </div>
@@ -245,7 +235,7 @@
         >
       </li>
     </ul>
-    <button (click)="logout()" class="signout-btn">Sign Out</button>
+    <button (click)="logout()" class="signout-btn"><i class="fa fa-signout"></i>Sign Out</button>
   </div>
 
   <div class="main-content">
@@ -464,6 +454,8 @@
             </tr>
           </tbody>
         </table>
+        <p>Showing 1 of 1000 users</p>
+        <p class="pagination">Previous 1 2 3 .... 1000 Next</p>
       </div>
 
       <div *ngIf="tabIndex === 2">
@@ -527,6 +519,10 @@
             </tr>
           </tbody>
         </table>
+        <div class="pagination">
+        <p>Showing 1 of 1000 users</p>
+        <p>Previous 1 2 3 .... 1000 Next</p>
+        </div>
       </div>
 
       <div *ngIf="tabIndex === 3">
@@ -563,33 +559,49 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of filteredStudentList; let i = index">
+            <tr *ngFor="let user of studentList; let i = index">
               <td>{{ user.id }}</td>
               <td>{{ user.licence }}</td>
               <td>{{ user.fname }}</td>
               <td>{{ user.mobile }}</td>
-              <td>
-                <span class="badge badge-size">{{ user.status }}</span>
-              </td>
+              <td><span class="badge badge-size">{{ user.status }}</span></td>
               <td class="actions">
                 <span
                   ><i
                     class="fa fa-solid fa-edit action-edit"
                     data-bs-toggle="modal"
                     data-bs-target="#studentModal"
-                    (click)="editStudent(i)"
+                    (click)="editStudent(user)"
                   ></i
                 ></span>
                 <span
                   ><i
                     class="fa fa-solid fa-trash action-delete"
-                    (click)="deleteStudent(i)"
+                    (click)="deleteStudent(user._id)"
                   ></i
                 ></span>
               </td>
             </tr>
           </tbody>
         </table>
+        <div class="show-table">
+        <p>Showing 1 of {{studentList.length}} users</p>
+        <nav >
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link"  (click)="prevPage()">Previous</a>
+            </li>
+      
+            <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="currentPage === i + 1">
+              <a class="page-link"  (click)="changePage(i + 1)">{{ i + 1 }}</a>
+            </li>
+      
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link"  (click)="nextPage()">Next</a>
+            </li>
+          </ul>
+        </nav>
+        </div>
       </div>
     </div>
   </div>
