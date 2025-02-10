@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +19,9 @@ import { Router, RouterModule } from '@angular/router';
 export class RegisterComponent {
   registerForm: FormGroup | any;
   imagePath = 'src/app/assets/loginpageimage.jpg';
-
-  constructor(private router: Router) {}
+  errorMessage: string = '';
+  successMessage: string = '';
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -30,19 +32,34 @@ export class RegisterComponent {
     });
   }
 
-  register() {
-    let storedData = localStorage.getItem('registerData');
-    let existingUsers = storedData ? JSON.parse(storedData) : [];
-    console.log(existingUsers.username);
-    let isUserExists =
-      existingUsers.username === this.registerForm.value.username;
-
-    if (isUserExists) {
-      alert('Username already exists');
-    } else {
-      localStorage.setItem('registerData', JSON.stringify(existingUsers));
-      alert('Registration successful!');
-      this.router.navigate(['/login']);
+  register(): void {
+    if (this.registerForm.invalid) {
+      this.errorMessage =
+        'Please fill in all required fields and accept the terms.';
+      return;
     }
+
+    if (
+      this.registerForm.value.password !== this.registerForm.value.confirmpass
+    ) {
+      this.errorMessage = 'Passwords do not match.';
+      return;
+    }
+
+    this.userService.register(this.registerForm.value).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.successMessage = res.message;
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.errorMessage = res.message;
+        }
+      },
+      (err) => {
+        this.errorMessage = err.error.message || 'Registration failed.';
+      }
+    );
   }
 }

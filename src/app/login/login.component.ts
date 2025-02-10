@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../user.service';
 @Component({
   selector: 'app-login',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterModule],
@@ -12,8 +13,9 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup | any;
   imagePath = '../assets/loginpageimage.jpg';
-
-  constructor(private router: Router) {}
+  errorMessage: string = '';
+  successMessage: string = '';
+  constructor(private router: Router,private userService:UserService) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -23,20 +25,24 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
-    let storedData = localStorage.getItem('registerData');
-    let existingUsers = storedData ? JSON.parse(storedData) : [];
-    let enteredUsername = this.loginForm.value.username;
-    let enteredPassword = this.loginForm.value.password;
-    let foundUser = existingUsers.username === enteredUsername;
-
-    if (!foundUser) {
-      alert('User not found');
-    } else if (existingUsers.password !== enteredPassword) {
-      alert('Incorrect password');
-    } else {
-      alert('Login successful!');
-      this.router.navigate(['/dashboard'])
+  login(): void {
+    if (this.loginForm.invalid) {
+      this.errorMessage = 'Please fill in all required fields and accept the terms.';
+      return;
     }
+
+    this.userService.login(this.loginForm.value).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.successMessage = res.message;
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.errorMessage = res.message;
+        }
+      },
+      (err:any) => {
+        this.errorMessage = err.error.message || 'Login failed.';
+      }
+    );
   }
 }
