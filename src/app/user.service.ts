@@ -6,32 +6,35 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = "https://backend-llmsportal.onrender.com/users";
+  private apiUrl = "https://backend-llmsportal.onrender.com";
 
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl + "/users");
   }
 
   addUser(user: any) {
-    return this.http.post(this.apiUrl, user);
+    return this.http.post(this.apiUrl + "/users", user);
   }
 
   updateUser(id: string, user: any) {
-    return this.http.put(`${this.apiUrl}/${id}`, user);
+    return this.http.put(`${this.apiUrl+ "/users"}/${id}`, user);
   }
 
   deleteUser(id: string) {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl+ "/users"}/${id}`);
   }
 
   register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+    return this.http.post(`${this.apiUrl}/auth/register`, userData);
   }
 
- 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials);
+  }
+
+  getUserDetails(username: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/auth/user/${username}`);
   }
 }
