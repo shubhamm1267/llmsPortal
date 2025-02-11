@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = "https://backend-llmsportal.onrender.com";
+  private apiUrl = "http://localhost:5000";
 
   constructor(private http: HttpClient) {}
 
@@ -36,5 +36,9 @@ export class UserService {
 
   getUserDetails(username: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/auth/user/${username}`);
+  }
+
+  getUserCounts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/auth/userCounts`);
   }
 }

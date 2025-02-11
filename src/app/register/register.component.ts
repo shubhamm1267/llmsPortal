@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -50,16 +51,49 @@ export class RegisterComponent {
       (res: any) => {
         if (res.success) {
           this.successMessage = res.message;
+          this.showSuccessToast(`Hi ${res.user.username + " " + this.successMessage}`)
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, 2000);
         } else {
           this.errorMessage = res.message;
+          this.showErrorToast(`Hi ${res.user.username + " " + this.errorMessage}`)
         }
       },
       (err) => {
         this.errorMessage = err.error.message || 'Registration failed.';
       }
     );
+  }
+  showSuccessToast(message: string) {
+    Swal.fire({
+      icon: 'success',
+      title: message,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
+  showErrorToast(message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: message,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
+
+  showWarnToast(message: string) {
+    Swal.fire({
+      icon: 'warning',
+      title: message,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
   }
 }

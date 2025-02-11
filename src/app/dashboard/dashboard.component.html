@@ -246,6 +246,10 @@
         <h2 *ngIf="tabIndex === 1">Users</h2>
         <h2 *ngIf="tabIndex === 2">Mentors</h2>
         <h2 *ngIf="tabIndex === 3">Students</h2>
+        <h2 *ngIf="tabIndex === 4">Licenses</h2>
+        <h2 *ngIf="tabIndex === 5">Course</h2>
+        <h2 *ngIf="tabIndex === 6">Pricing Plans</h2>
+        <h2 *ngIf="tabIndex === 7">Masters</h2>
       </div>
       <div class="main-flex">
         <div class="main-search">
@@ -260,7 +264,9 @@
             height="30px"
             alt="User"
           />
-          <span class="user-name">Christine Dia</span>
+          <span class="user-name">
+            {{userName}}
+          </span>
           <i class="fa fa-solid fa-chevron-down arrow-icon"></i>
         </div>
       </div>
@@ -277,7 +283,7 @@
 
         <div class="stats-container">
           <div class="stat-card">
-            <h3 class="margin-text">2</h3>
+            <h3 class="margin-text">{{totalUsers}}</h3>
             <p class="dash-icons">
               <span><i class="fa fa-solid fa-server"></i></span>Live Users
             </p>
@@ -290,7 +296,7 @@
             </p>
           </div>
           <div class="stat-card">
-            <h3 class="margin-text">898876</h3>
+            <h3 class="margin-text">{{studentList.length}}</h3>
             <p class="dash-icons">
               <span><i class="fa fa-solid fa-users"></i></span>Total Students
             </p>
@@ -350,7 +356,7 @@
               ></span>
             </div>
             <div>
-              <h3>7</h3>
+              <h3>{{todayUsers}}</h3>
               <p>Today's Registration</p>
             </div>
           </div>
@@ -393,7 +399,7 @@
         </div>
       </div>
 
-      <div *ngIf="tabIndex === 1">
+      <!-- <div *ngIf="tabIndex === 1">
         <i class="fa fa-solid fa-search search-filter-icon"></i>
         <input
           type="text"
@@ -427,7 +433,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of filteredUserList; let i = index">
+            <tr *ngFor="let user of paginatedList; let i = index">
               <td>{{ user.id }}</td>
               <td>{{ user.fname }}</td>
               <td>{{ user.username }}</td>
@@ -456,9 +462,9 @@
         </table>
         <p>Showing 1 of 1000 users</p>
         <p class="pagination">Previous 1 2 3 .... 1000 Next</p>
-      </div>
+      </div> -->
 
-      <div *ngIf="tabIndex === 2">
+      <!-- <div *ngIf="tabIndex === 2">
         <i class="fa fa-solid fa-search search-filter-icon"></i>
         <input
           type="text"
@@ -492,7 +498,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of filteredUserList; let i = index">
+            <tr *ngFor="let user of paginatedList; let i = index">
               <td>{{ user.id }}</td>
               <td>{{ user.fname }}</td>
               <td>{{ user.username }}</td>
@@ -523,9 +529,9 @@
         <p>Showing 1 of 1000 users</p>
         <p>Previous 1 2 3 .... 1000 Next</p>
         </div>
-      </div>
+      </div> -->
 
-      <div *ngIf="tabIndex === 3">
+      <div *ngIf="tabIndex === 1 || tabIndex === 2 || tabIndex === 3 || tabIndex === 4 || tabIndex === 5 || tabIndex === 6 || tabIndex === 7">
         <i class="fa fa-solid fa-search search-filter-icon"></i>
         <input
           type="text"
@@ -559,7 +565,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of studentList; let i = index">
+            <tr *ngFor="let user of paginatedList; let i = index">
               <td>{{ user.id }}</td>
               <td>{{ user.licence }}</td>
               <td>{{ user.fname }}</td>

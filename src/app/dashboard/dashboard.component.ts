@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,10 +21,10 @@ export class DashboardComponent implements OnInit {
   tabIndex = 0;
   userList: any[] = [];
   studentList: any[] = [];
-  
   showToast = false;
   selectedUser: any = null;
-
+  totalUsers: number = 0;
+  todayUsers: number = 0;
   filteredUserList: any = [...this.userList];
   filteredStudentList: any = [...this.studentList];
 
@@ -49,10 +50,24 @@ export class DashboardComponent implements OnInit {
   isModalOpen = false;
   currentPage = 1;
   itemsPerPage = 8;
+  studentName:any;
+  userName: any;
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.loadUsers();
+    this.userName = localStorage.getItem('user');
+    this.userService.getUserCounts().subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.totalUsers = res.totalUsers;
+          this.todayUsers = res.todayCount;
+        }
+      },
+      (error) => {
+        console.error("Error fetching user counts:", error);
+      }
+    );
   }
 
   loadUsers() {
@@ -63,6 +78,7 @@ export class DashboardComponent implements OnInit {
   addUser() {
     this.userService.addUser(this.studentForm.value).subscribe(() => {
       this.showNotification();
+      this.showSuccessToast("User Added Sucessfully");
       this.loadUsers();
     });
   }
@@ -71,6 +87,7 @@ export class DashboardComponent implements OnInit {
     if (this.selectedUser) {
       this.userService.updateUser(this.selectedUser._id, this.studentForm.value).subscribe(() => {
         this.showNotification();
+        this.showSuccessToast("User Updated Sucessfully");
         this.loadUsers();
       });
     }
@@ -115,10 +132,46 @@ export class DashboardComponent implements OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
+  showSuccessToast(message: string) {
+    Swal.fire({
+      icon: 'success',
+      title: message,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
+
+  showErrorToast(message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: message,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
+
+  showWarnToast(message: string) {
+    Swal.fire({
+      icon: 'warning',
+      title: message,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
+
   logout() {
     this.router.navigate(['/login']);
-    localStorage.removeItem('registerData');
+    this.showSuccessToast("Logout Successfully");
+    localStorage.clear();
   }
+
+  
 
   openModal(index: any | null = null) {
     this.isEdit = index !== null;
@@ -211,6 +264,7 @@ export class DashboardComponent implements OnInit {
 
   deleteStudent(id: any) {
     this.userService.deleteUser(id).subscribe(() => this.loadUsers());
+    this.showSuccessToast("User Deleted Sucessfully");
     this.filterUsers();
   }
 }
