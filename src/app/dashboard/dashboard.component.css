@@ -47,6 +47,7 @@ body {
   font-size: x-large;
   margin-right: 15px;
 }
+
 .dash-icons {
   font-size: larger;
 }
@@ -89,11 +90,12 @@ body {
   background-color: #f9f9f9;
 }
 
-.sidebar-closed + .main-content {
+
+.sidebar-closed+.main-content {
   margin-left: 0px;
 }
 
-.sidebar-closed + .main-content {
+.sidebar-closed+.main-content {
   margin-left: 0px;
 }
 
@@ -162,6 +164,7 @@ body {
 .search-box::placeholder {
   padding-left: 40px;
 }
+
 .search-filter-icon {
   position: relative;
   left: 30px;
@@ -185,6 +188,7 @@ table {
   width: 90px;
   background-color: #35c75a;
 }
+
 .profile {
   display: flex;
   align-items: center;
@@ -330,6 +334,7 @@ table {
   border-right: #299b99 7px solid;
   background-color: #e9e7e7;
 }
+
 .list-unstyled li:active {
   border-right: #299b99 7px solid;
   background-color: #e9e7e7;
@@ -377,4 +382,83 @@ table {
 .show-table {
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .stats-container {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-direction: column;
+
+  }
+
+  .stat-card {
+    position: relative;
+    background: white;
+    color: black;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 46%;
+    height: 105px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .card-head {
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .dashboard-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .mentor-stats[_ngcontent-ng-c3014535259] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .card-head {
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    display: inline-block;
+    width: 46%;
+  }
+
+  .card-head button {
+    height: 50px;
+    margin-right: 20px;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 26px;
+    gap: 8px;
+    z-index: -1;
+  }
+
+
+  .register-card {
+    width: 46%;
+    background: white;
+    padding: 15px;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+  }
 }

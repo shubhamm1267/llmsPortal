@@ -6,6 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import Swal from 'sweetalert2';
@@ -27,7 +28,12 @@ export class DashboardComponent implements OnInit {
   todayUsers: number = 0;
   filteredUserList: any = [...this.userList];
   filteredStudentList: any = [...this.studentList];
-
+  fileName = 'ExcelSheet.xlsx';
+  studentColumns: any = ["ID", "Licence", "Full Name", "Mobile", "Status", "Actions"];
+  userColumns: any = ["ID", "Full Name", "Username", "Role", "Status", "Actions"];
+  licenceColumns: any = ["ID", "Entity Name", "# of Licences", "Used", "Status", "Actions"];
+  courseColumns: any = ["ID", "Course Name", "Certificate", "Configure", "Status", "Actions"];
+  mastersColumns: any = ["ID", "Data Master", "Data Size", "Mobile", "Status", "Actions"];
   searchText = '';
 
   userForm = new FormGroup({
@@ -52,6 +58,7 @@ export class DashboardComponent implements OnInit {
   itemsPerPage = 8;
   studentName:any;
   userName: any;
+  currentColumns: any=0;
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
@@ -83,6 +90,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  
   updateUser() {
     if (this.selectedUser) {
       this.userService.updateUser(this.selectedUser._id, this.studentForm.value).subscribe(() => {
@@ -101,6 +109,30 @@ export class DashboardComponent implements OnInit {
 
   setTabIndex(tabIndex: number) {
     this.tabIndex = tabIndex;
+   this.loadUsers();
+    if (tabIndex === 1) {
+      this.currentColumns = this.userColumns;
+    }
+
+    else if (tabIndex === 2) {
+      this.currentColumns = this.userColumns;
+    }
+
+    else if (tabIndex === 3) {
+      this.currentColumns = this.studentColumns;
+    }
+    else if (tabIndex === 4) {
+      this.currentColumns = this.licenceColumns;
+    }
+    else if (tabIndex === 5) {
+      this.currentColumns = this.courseColumns;
+    }
+    else if (tabIndex === 6) {
+      this.currentColumns = this.licenceColumns;
+    }
+    else if (tabIndex === 7) {
+      this.currentColumns = this.mastersColumns;
+    }
   }
 
   get totalPages(): number {
@@ -171,7 +203,16 @@ export class DashboardComponent implements OnInit {
     localStorage.clear();
   }
 
-  
+  exportexcel(): void {
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    XLSX.writeFile(wb, this.fileName);
+
+  }
 
   openModal(index: any | null = null) {
     this.isEdit = index !== null;
